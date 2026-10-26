@@ -17,6 +17,14 @@ FetchContent_Declare(Eigen
 )
 FetchContent_MakeAvailable(Eigen)
 
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.tar.gz
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+FetchContent_MakeAvailable(googletest)
+
 add_library(kestrel_core src/rigid_body.cpp)
 target_include_directories(kestrel_core PUBLIC include)
 target_link_libraries(kestrel_core PUBLIC Eigen3::Eigen)
@@ -24,3 +32,10 @@ target_link_libraries(kestrel_core PUBLIC Eigen3::Eigen)
 add_executable(kestrel src/main.cpp)
 
 target_link_libraries(kestrel PRIVATE kestrel_core)
+
+enable_testing()
+add_executable(kestrel_tests tests/test_rigid_body.cpp
+        tests/test_rigid_body.cpp)
+target_link_libraries(kestrel_tests PRIVATE kestrel_core GTest::gtest_main)
+include(GoogleTest)
+gtest_discover_tests(kestrel_tests)
