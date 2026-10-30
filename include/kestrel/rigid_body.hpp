@@ -9,4 +9,9 @@ namespace kestrel {
         Eigen::Quaterniond attitude = Eigen::Quaterniond::Identity(); // attitude, body -> world
         Eigen::Vector3d angular_velocity = Eigen::Vector3d::Zero(); // angular velocity, body frame, in rad/s
     };
+
+    struct RigidBodyParams {
+        double mass = 1.0; // mass in kg
+        Eigen::Matrix3d inertia = Eigen::Matrix3d::Identity(); // inertia tensor, body fame, in kg * m^2
+    };
 } // namespace kestrel

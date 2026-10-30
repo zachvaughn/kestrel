@@ -13,3 +13,9 @@ TEST(RigidBodyState, DefaultIsAtRest) {
     EXPECT_TRUE(state.angular_velocity.isZero());
     EXPECT_TRUE(state.attitude.isApprox(Eigen::Quaterniond::Identity()));
 }
+
+TEST(RigidBodyParams, DefaultValues) {
+    kestrel::RigidBodyParams params;
+    EXPECT_TRUE(params.inertia.isApprox(Eigen::Matrix3d::Identity()));
+    EXPECT_DOUBLE_EQ(params.mass, 1.0);
+}
