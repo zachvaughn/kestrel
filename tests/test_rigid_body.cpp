@@ -19,3 +19,17 @@ TEST(RigidBodyParams, DefaultValues) {
     EXPECT_TRUE(params.inertia.isApprox(Eigen::Matrix3d::Identity()));
     EXPECT_DOUBLE_EQ(params.mass, 1.0);
 }
+
+TEST(RigidBodyDerivative, DefaultIsZero) {
+    kestrel::RigidBodyDerivative derivative;
+    EXPECT_TRUE(derivative.position_dot.isZero());
+    EXPECT_TRUE(derivative.velocity_dot.isZero());
+    EXPECT_TRUE(derivative.angular_velocity_dot.isZero());
+    EXPECT_TRUE(derivative.attitude_dot.coeffs().isZero());
+}
+
+TEST(RigidBodyInputs, DefaultIsZero) {
+    kestrel::RigidBodyInputs inputs;
+    EXPECT_TRUE(inputs.force.isZero());
+    EXPECT_TRUE(inputs.torque.isZero());
+}
