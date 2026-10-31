@@ -26,4 +26,8 @@ namespace kestrel {
         Eigen::Quaterniond attitude_dot = Eigen::Quaterniond(0, 0, 0, 0); // quaternion rate, raw coeffs, not a unit quaternion
         Eigen::Vector3d angular_velocity_dot = Eigen::Vector3d::Zero(); // angular acceleration, body frame, in rad/s^2
     };
+
+    RigidBodyDerivative compute_derivative(const RigidBodyState& state,
+        const RigidBodyParams& params,
+        const RigidBodyInputs& inputs);
 } // namespace kestrel

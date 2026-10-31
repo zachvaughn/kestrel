@@ -33,3 +33,28 @@ TEST(RigidBodyInputs, DefaultIsZero) {
     EXPECT_TRUE(inputs.force.isZero());
     EXPECT_TRUE(inputs.torque.isZero());
 }
+
+TEST(ComputeDerivative, PositionDotEqualsVelocity) {
+    kestrel::RigidBodyState state;
+    kestrel::RigidBodyParams params;
+    kestrel::RigidBodyInputs inputs;
+
+    state.velocity = Eigen::Vector3d(1, 2, 3);
+
+    kestrel::RigidBodyDerivative derivative = kestrel::compute_derivative(state, params, inputs);
+
+    EXPECT_TRUE(derivative.position_dot.isApprox(Eigen::Vector3d(1, 2, 3)));
+}
+
+TEST(ComputeDerivative, GravityAcceleratesDown) {
+    kestrel::RigidBodyState state;
+    kestrel::RigidBodyParams params;
+    kestrel::RigidBodyInputs inputs;
+
+    params.mass = 2.0;
+    inputs.force = Eigen::Vector3d(0, 0, 2.0 * 9.81);
+
+    kestrel::RigidBodyDerivative derivative = kestrel::compute_derivative(state, params, inputs);
+
+    EXPECT_TRUE(derivative.velocity_dot.isApprox(Eigen::Vector3d(0, 0, 9.81)));
+}
